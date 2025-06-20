@@ -22,5 +22,5 @@ This project lets you experiment with how agents adapt their decision strategies
 
 1. Clone this repo:
    ```bash
-   git clone https://github.com/your-name/cynefin-agent-sim.git
-   cd cynefin-agent-sim
+   git clone https://github.com/afifs/cynagentsim.git
+   cd cynagentsim
