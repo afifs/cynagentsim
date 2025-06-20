@@ -35,6 +35,25 @@
         });
       })
       .catch(err => console.error("Error loading data:", err));
+    function loadAgents() {
+  fetch("cynefin-model.php?ts=" + Date.now()) // prevent caching
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("env").innerText =
+        `🌡 Volatility: ${data.environment.volatility} | ⏱️ Feedback Lag: ${data.environment.feedback_lag}`;
+      const container = document.getElementById("agents");
+      container.innerHTML = ""; // clear previous
+      data.agents.forEach(agent => {
+        const box = document.createElement("div");
+        box.className = "agent " + agent.domain;
+        box.innerText = `Agent ${agent.id}: ${agent.domain} → ${agent.strategy}`;
+        container.appendChild(box);
+      });
+    });
+}
+
+// Initial load
+loadAgents();
   </script>
 </body>
 </html>
