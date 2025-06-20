@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cynefin Agent Dashboard</title>
+  <style>
+    body { font-family: sans-serif; background: #f4f4f4; }
+    .agent { padding: 8px; margin: 5px; border-radius: 5px; color: white; }
+    .obvious { background: green; }
+    .complicated { background: blue; }
+    .complex { background: orange; }
+    .chaotic { background: red; }
+    .confused { background: gray; }
+  </style>
+</head>
+<body>
+  <h2>🧠 Cynefin Agents</h2>
+  <p id="env"></p>
+  <div id="agents"></div>
+
+  <script>
+    fetch("cynefin-model.php") // adjust path to match your PHP file
+      .then(res => res.json())
+      .then(data => {
+        const env = data.environment;
+        document.getElementById("env").innerText =
+          `🌡 Volatility: ${env.volatility} | ⏱️ Feedback Lag: ${env.feedback_lag}`;
+
+        const container = document.getElementById("agents");
+        data.agents.forEach(agent => {
+          const box = document.createElement("div");
+          box.className = "agent " + agent.domain;
+          box.innerText = `Agent ${agent.id}: ${agent.domain} → ${agent.strategy}`;
+          container.appendChild(box);
+        });
+      })
+      .catch(err => console.error("Error loading data:", err));
+  </script>
+</body>
+</html>
